@@ -72,6 +72,7 @@ class ViewController: UIViewController, UIWebViewDelegate, UITableViewDelegate, 
         
         let choose = Int(arc4random_uniform(UInt32(self.allBukkenArray.count - 1)))
         
+        self.bukkenArray = []
         
         for var i = 0; i <= choose; i++ {
             self.bukkenArray?.append(self.allBukkenArray[i])
@@ -103,8 +104,8 @@ class ViewController: UIViewController, UIWebViewDelegate, UITableViewDelegate, 
     
     @IBAction func tableButton(sender: AnyObject) {
         
-        //loadTableCell("1")
-        //self.moveableTableView.reloadData()
+        tableArray = self.loadTableCell("1")
+        self.refreshUI()
         
         moveableTableView.hidden = false
         moveableWebView.hidden = true
@@ -133,6 +134,12 @@ class ViewController: UIViewController, UIWebViewDelegate, UITableViewDelegate, 
         
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func refreshUI() {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.moveableTableView.reloadData()
+        })
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
